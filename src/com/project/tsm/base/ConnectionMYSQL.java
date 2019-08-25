@@ -17,6 +17,7 @@ public class ConnectionMYSQL {
     private static Connection connection;
     public static Connection getConnection(){
         try {
+            //setting koneksi
               String url = "jdbc:mysql://localhost/translator_db";
               String username = "root";
               String password = "";
