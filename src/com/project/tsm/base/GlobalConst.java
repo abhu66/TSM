@@ -10,7 +10,5 @@ package com.project.tsm.base;
  * @author Osvaldo Erens
  */
 public class GlobalConst {
-    private static String USER_NAME ="username";
-   
-    
+    private static String USER_NAME ="username"; 
 }
