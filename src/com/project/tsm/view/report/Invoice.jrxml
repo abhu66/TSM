@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="889378ec-28fc-4457-bb49-dac2c3be995e">
+	<property name="ireport.zoom" value="1.1000000000000028"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="52"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="83" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="243" height="79" uuid="cd593131-ee80-447a-8ed2-ed9a2f441001"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[Jl. smp 147, Komp. Nabila Indah No.1A Cibubur East
+Jakarta 13720, INDONESIA
+Telp : +622188365, +628111830867
+Whatsapp +628111443446
+Email : translate@transwatranslator.com,
+Website : WWW.transwatranslator.com]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="79" width="243" height="1" uuid="36546d44-0652-4c1f-b9e9-5af5d2c6d6ab"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="195" y="0" width="151" height="35" uuid="c73b254a-29a1-4054-8d30-449cd1de36dc"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="25" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[I N V O I C E]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="174" splitType="Stretch">
+			<textField>
+				<reportElement x="5" y="0" width="75" height="20" uuid="a59c9125-601d-4fdc-a049-79ca43142074"/>
+				<textFieldExpression><![CDATA[Order]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="40" width="75" height="20" uuid="b2ef2c87-3ea5-4880-a55b-053fcd0d03f3"/>
+				<textFieldExpression><![CDATA[Invoice Date]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="20" width="75" height="20" uuid="e9e28719-35e1-4df5-b697-102897bc3193"/>
+				<textFieldExpression><![CDATA[Invoice No	]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="12" height="20" uuid="5900d1cd-847e-4229-9560-618a07ec8b2a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="40" width="12" height="20" uuid="bd115244-4dfb-4a8d-aeb5-a588d0f8585a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="20" width="12" height="20" uuid="3eaa4a45-5ec3-48ab-8902-127696be1f5b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="73" width="87" height="20" uuid="5cefd3a2-9439-4197-9983-04bc1636674c"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[CUSTOMER]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="93" width="100" height="20" uuid="15edcd73-df5d-4be4-9d0c-28e5b76372ae"/>
+				<textFieldExpression><![CDATA[Name]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="113" width="100" height="20" uuid="ae507a94-22ea-407d-a895-992a414b6e31"/>
+				<textFieldExpression><![CDATA[Address]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="153" width="100" height="20" uuid="ec22bc8d-985d-499b-8a93-a4501e9a4e05"/>
+				<textFieldExpression><![CDATA[Contact Person]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="153" width="12" height="20" uuid="4d2b3706-3796-4bb8-a828-3cc7c044474d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="113" width="12" height="20" uuid="1752290b-b531-49cb-89f3-134d952eeae8"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[:]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="93" width="12" height="20" uuid="9d62a285-2951-4a68-8434-cb74a2d3972e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[:]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="307" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="41" height="20" uuid="457bc8e6-6a4c-4372-a3b9-93bc85d38a42"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[NO]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="179" height="20" uuid="55a01616-8cf9-49da-bcb3-60323f031ecc"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[Document Name]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="0" width="116" height="20" uuid="88088c03-524d-4f5b-81a7-aa2c717de6fe"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[Language Pair]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="0" width="41" height="20" uuid="133c8141-4b7e-4fa4-a0b9-7b9ffd0f850e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[Qty]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="0" width="91" height="20" uuid="729f4849-618f-4e9c-be09-a46619cea6ce"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[Price IDR]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="0" width="92" height="20" uuid="cb8ebc1b-6a50-4115-819a-57d5fbed54c6"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[Amount IDR]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="247" width="129" height="20" uuid="ec201126-e88b-4ce6-af3f-e629b9583e69"/>
+				<textFieldExpression><![CDATA[Sub Total]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="267" width="129" height="20" uuid="ce043d0a-bd05-4d98-9d86-2ddd75e33ca1"/>
+				<textFieldExpression><![CDATA[10 % VAT]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="287" width="129" height="20" uuid="8b1e60fe-409c-4991-a63d-477dc988e9ad"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TOTAL IDR]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="99" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="19" width="218" height="79" uuid="d8b68888-309f-4d84-bfa3-f927b87b4d7d"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[
+ Bank		: Bank Syariah Mandiri (BSM)
+ Acc		: 7121238882
+ Branch		: Depok Cimanggis
+ Swift Code	: BSMDIDJA
+ Beneficiary	: CV. Transwa TRANSLATOR]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="218" height="20" uuid="71185011-7b63-42c9-ab31-84c04668ba31"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[PAYMENT ADVICE]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="63" y="13" width="100" height="1" uuid="6a712156-8c43-443d-a2ed-908595ad7391"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="802" splitType="Stretch"/>
+	</summary>
+</jasperReport>
