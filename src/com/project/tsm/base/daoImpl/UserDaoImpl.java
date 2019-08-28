@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao{
     private Statement st;
     private ResultSet rs;
     private PreparedStatement ps;
-    private Connection connection = ConnectionMYSQL.getConnection();
+    private final Connection connection = ConnectionMYSQL.getConnection();
 
     @Override
     public User login(String username, String password) {
@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao{
         try {
             st = connection.createStatement();
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT * FROM Login").append(" where username = '").append(username)
+            sb.append("SELECT * FROM User").append(" where username = '").append(username)
                     .append("'").append(" and password = md5('")
                     .append(password).append("')");
             rs = st.executeQuery(sb.toString());
