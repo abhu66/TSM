@@ -5,8 +5,8 @@
  */
 package com.project.tsm.view;
 
-import com.project.tsm.base.daoImpl.LoginDaoImpl;
-import com.project.tsm.model.Login;
+import com.project.tsm.base.daoImpl.UserDaoImpl;
+import com.project.tsm.model.User;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
@@ -20,7 +20,7 @@ public class LoginForm extends javax.swing.JDialog {
      * Creates new form LoginForm
      */
     
-    LoginDaoImpl loginDaoImpl = new LoginDaoImpl();
+    UserDaoImpl userDaoImpl = new UserDaoImpl();
     
     
     public LoginForm(java.awt.Frame parent, boolean modal) {
@@ -34,7 +34,7 @@ public class LoginForm extends javax.swing.JDialog {
            JOptionPane.showMessageDialog(rootPane, "Please fill required Field !");
        }
        else {
-           Login login = loginDaoImpl.login(jTextField1.getText(), jPasswordField1.getText());
+           User login = userDaoImpl.login(jTextField1.getText(), jPasswordField1.getText());
            if(login != null){
                JOptionPane.showMessageDialog(rootPane, "Login success !");
                this.dispose();
