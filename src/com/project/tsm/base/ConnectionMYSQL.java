@@ -7,6 +7,7 @@ package com.project.tsm.base;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +23,7 @@ public class ConnectionMYSQL {
               String username = "root";
               String password = "";
               connection = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Koneksi gagal ! "+e.getMessage());
         }
         return connection;

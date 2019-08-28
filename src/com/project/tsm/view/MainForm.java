@@ -5,6 +5,8 @@
  */
 package com.project.tsm.view;
 
+import com.project.tsm.base.GlobalConst;
+import com.project.tsm.view.internalframe.ClientFrame;
 import com.project.tsm.view.internalframe.OrderFrame;
 
 /**
@@ -16,6 +18,8 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * Creates new form MainForm
      */
+    
+    public static final String USER_NAME ="USER_NAME";
     public MainForm() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
@@ -41,6 +45,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,8 +101,13 @@ public class MainForm extends javax.swing.JFrame {
             .addGap(0, 426, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("File");
+        jMenuBar1.setPreferredSize(new java.awt.Dimension(148, 30));
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/ic_setting.png"))); // NOI18N
+        jMenu1.setText("File");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Logout");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,8 +118,18 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/ic_transaction.png"))); // NOI18N
         jMenu2.setText("Transaction");
+        jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jMenu2.setMargin(new java.awt.Insets(0, 0, 0, 5));
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/ic_order.png"))); // NOI18N
         jMenuItem2.setText("Order");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,6 +137,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/ic_client.png"))); // NOI18N
+        jMenuItem3.setText("Client");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
 
@@ -146,9 +176,17 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         OrderFrame orderFrame = new OrderFrame();
-        jDesktopPane1.add(orderFrame);
-        orderFrame.setVisible(rootPaneCheckingEnabled);
+        GlobalConst.centerJinternalFrame(jDesktopPane1, orderFrame);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       ClientFrame clientFrame = new ClientFrame();
+       GlobalConst.centerJinternalFrame(jDesktopPane1, clientFrame);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,6 +234,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,7 @@
  */
 package com.project.tsm.view;
 
+import com.project.tsm.base.GlobalConst;
 import com.project.tsm.base.daoImpl.UserDaoImpl;
 import com.project.tsm.model.User;
 import java.awt.event.KeyEvent;
@@ -40,6 +41,7 @@ public class LoginForm extends javax.swing.JDialog {
                this.dispose();
                MainForm mainForm = new MainForm();
                mainForm.jLabel3.setText(login.getName());
+               GlobalConst.USER_NAME = login.getName();
                mainForm.jLabel4.setText(login.getRole().toUpperCase());
                mainForm.setVisible(rootPaneCheckingEnabled);
            }
