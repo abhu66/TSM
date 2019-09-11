@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Agu 2019 pada 11.18
+-- Waktu pembuatan: 11 Sep 2019 pada 12.26
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 5.6.40
 
@@ -46,8 +46,90 @@ CREATE TABLE `client` (
 
 INSERT INTO `client` (`id`, `name`, `contact`, `pic`, `address`, `created_date`, `updated_date`, `created_by`, `updated_by`) VALUES
 (1, 'PT.ABCD EFGHI JKLMN', '081218209581', 'ABU KHOERUL ISKANDAR ALI', 'JL. PETA BARAT NO.60 KALIDERES JAKARTA BARAT', '2019-08-28', '2019-08-28', 'admin', 'admin'),
-(2, 'PT. OPQR STUV WXY', '081218209580', 'OSVALDO', 'DEPOK CIMANGGIS', '2019-08-28', '2019-08-28', 'admin', 'admin'),
-(3, 'PT. ABCD ABCD', '081218209588', 'ADNAN PUTRA', 'CIBUBUR', '2019-08-28', '2019-08-28', 'admin', 'admin');
+(2, 'PT. OPQR STUV WXY', '081218209580', 'OSVALDO ERENS', 'DEPOK CIMANGGIS', '2019-08-28', '2019-09-11', 'admin', 'admin'),
+(3, 'PT. ABCD ABCD', '081218209588', 'ADNAN PUTRA', 'CIBUBUR', '2019-08-28', '2019-08-28', 'admin', 'admin'),
+(4, 'PT. AMAN SEJAHTERA', '02154355431', 'ANDRE', 'JAKARTA SELATAN', '2019-09-08', '2019-09-08', 'admin', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `languages`
+--
+
+CREATE TABLE `languages` (
+  `id` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `created_date` date NOT NULL,
+  `updated_date` date DEFAULT NULL,
+  `created_by` varchar(30) NOT NULL,
+  `updated_by` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `languages`
+--
+
+INSERT INTO `languages` (`id`, `name`, `description`, `created_date`, `updated_date`, `created_by`, `updated_by`) VALUES
+(1, 'ENG-INA', 'ENGLISH TO INDONESIA', '2019-09-08', '2019-09-08', 'admin', 'admin'),
+(2, 'INA-ENG', 'INDONESIA TO ENGLISH', '2019-09-08', '2019-09-08', 'admin', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `order_client`
+--
+
+CREATE TABLE `order_client` (
+  `id` int(11) NOT NULL,
+  `project_number` int(11) NOT NULL,
+  `date_order` date NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `order_type` varchar(15) DEFAULT NULL,
+  `languange` varchar(30) NOT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
+  `qty` enum('Page','Word') NOT NULL,
+  `qty_value` int(11) DEFAULT NULL,
+  `rate` enum('IDR','USD') NOT NULL,
+  `rate_value` double NOT NULL,
+  `deadline_client` enum('Date','Time') NOT NULL,
+  `deadline_client_value` varchar(30) DEFAULT NULL,
+  `translator_id` int(11) DEFAULT NULL,
+  `translator_deadline` enum('Date','Time') NOT NULL,
+  `translator_deadline_value` varchar(30) DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
+  `created_date` date NOT NULL,
+  `updated_date` date DEFAULT NULL,
+  `created_by` varchar(30) NOT NULL,
+  `updated_by` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `translator`
+--
+
+CREATE TABLE `translator` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `contact` varchar(15) DEFAULT NULL,
+  `created_date` date NOT NULL,
+  `updated_date` date DEFAULT NULL,
+  `created_by` varchar(30) NOT NULL,
+  `updated_by` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `translator`
+--
+
+INSERT INTO `translator` (`id`, `name`, `contact`, `created_date`, `updated_date`, `created_by`, `updated_by`) VALUES
+(1, 'DIDI SISWANDI', '089675116160', '2019-08-31', '2019-08-31', 'admin', 'admin'),
+(2, 'AGUNG', '081218209581', '2019-08-31', '2019-08-31', 'admin', 'admin'),
+(3, 'ANA MARIANAS', '08778787134', '2019-08-31', '2019-09-11', 'admin', 'admin'),
+(4, 'RITAS', '089675116160', '2019-08-31', '2019-09-11', 'admin', 'admin'),
+(5, 'ANGGITA WULANDARI', '08121209582', '2019-09-08', '2019-09-08', 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -85,6 +167,25 @@ ALTER TABLE `client`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `languages`
+--
+ALTER TABLE `languages`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indeks untuk tabel `order_client`
+--
+ALTER TABLE `order_client`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `translator`
+--
+ALTER TABLE `translator`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
@@ -99,7 +200,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `client`
 --
 ALTER TABLE `client`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT untuk tabel `languages`
+--
+ALTER TABLE `languages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `order_client`
+--
+ALTER TABLE `order_client`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `translator`
+--
+ALTER TABLE `translator`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
