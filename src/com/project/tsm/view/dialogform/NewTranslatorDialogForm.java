@@ -6,42 +6,62 @@
 package com.project.tsm.view.dialogform;
 
 import com.project.tsm.base.GlobalConst;
-import com.project.tsm.base.daoImpl.ClientDaoImpl;
-import com.project.tsm.model.Client;
-import com.project.tsm.view.internalframe.ClientFrame;
+import com.project.tsm.base.daoImpl.TranslatorDaoImpl;
+import com.project.tsm.model.Translator;
+import com.project.tsm.view.internalframe.TranslatorFrame;
 
 /**
  *
  * @author Ahmad Dudayef
  */
-public class ViewClientDialogForm extends javax.swing.JDialog {
+public final class NewTranslatorDialogForm extends javax.swing.JDialog {
 
     /**
-     * Creates new form NewClientDialogForm
+     * Creates new form NewTranslatorDialogForm
      */
     
-    public ClientFrame clientFrame;
-    public String idClient;
-    private final ClientDaoImpl clientDaoImpl = new ClientDaoImpl();
+    public TranslatorFrame translatorFrame;
+    public boolean isEdits;
+    public String idTranslator;
+    private final TranslatorDaoImpl translatorDaoImpl = new TranslatorDaoImpl();
     
-    public ViewClientDialogForm(java.awt.Frame parent, boolean modal) {
+    public NewTranslatorDialogForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-      
+        setNewId();
+        
     }
     
-    public void populateViewClient(String id){
-        Client client = clientDaoImpl.findClientById(id);
-        if(client != null){
-            jTextField1.setText(client.getName());
-            jTextField2.setText(client.getContact());
-            jTextField3.setText(client.getPic());
-            jTextArea1.setText(client.getAddres());
+    public void setNewId(){
+        Integer lastID = Integer.valueOf(translatorDaoImpl.checkId());
+        if(lastID == null){
+            lastID = 1;
+        }
+        else{
+            lastID = lastID + 1;
+        }
+        jTextField1.setEditable(false);
+        jTextField1.setText(String.valueOf(lastID));
+        jTextField2.requestFocus();
+  
+    }
+    
+    public void populateEditTranslator(String id, boolean isEdit){
+        
+        Translator translator = translatorDaoImpl.findTranslatorById(id);
+        if(translator != null){
+            jTextField1.setText(String.valueOf(translator.getId()));
+            jTextField2.setText(translator.getName());
+            jTextField3.setText(translator.getContact());
+   
         }
         else {
             GlobalConst.failedAlert("Load data ! ");
         }
+        
+        isEdits = isEdit;
+        idTranslator = id;
     }
 
     /**
@@ -54,39 +74,31 @@ public class ViewClientDialogForm extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setIconImages(null);
+        setTitle("New Translator");
 
-        jLabel1.setText("Name");
+        jLabel1.setText("ID");
 
-        jTextField1.setEditable(false);
+        jLabel2.setText("NAMA");
 
-        jLabel2.setText("Contact");
+        jLabel3.setText("CONTACT");
 
-        jTextField2.setEditable(false);
+        jButton1.setText("Save");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("PIC");
-
-        jTextField3.setEditable(false);
-
-        jLabel4.setText("Address");
-
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jButton2.setText("Close");
+        jButton2.setText("Cancel");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -100,23 +112,23 @@ public class ViewClientDialogForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3)
-                            .addComponent(jScrollPane1)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField1, jTextField3});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -134,19 +146,58 @@ public class ViewClientDialogForm extends javax.swing.JDialog {
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addContainerGap())
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(jTextField2.getText().isEmpty()){
+            GlobalConst.notifAlert("Please fill required field !");
+            jTextField2.requestFocus();
+        }
+        else {
+            if(isEdits == false){
+                //create new client
+                 try {
+                    Translator translator = new Translator();
+                    translator.setName(jTextField2.getText());
+                    translator.setContact(jTextField3.getText());
+                    //save
+                    translatorDaoImpl.saveTranslator(translator);
+                    dispose();
+                    translatorFrame.tableTranslator();
+                } catch (Exception e) {
+                    GlobalConst.failedAlert(e.getMessage());
+                }
+            }
+            else {
+               Translator translator = translatorDaoImpl.findTranslatorById(idTranslator);
+                if(translator != null){
+                    try {
+                     Translator translatorNew = new Translator();
+                     translatorNew.setName(jTextField2.getText());
+                     translatorNew.setContact(jTextField3.getText());
+                     translatorNew.setId(translator.getId());
+                     //save update
+                     translatorDaoImpl.updateTranslator(translatorNew);
+                     dispose();
+                     translatorFrame.tableTranslator();
+                 } catch (Exception e) {
+                     GlobalConst.failedAlert(e.getMessage());
+                 }
+               }
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,20 +216,19 @@ public class ViewClientDialogForm extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewClientDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewTranslatorDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewClientDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewTranslatorDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewClientDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewTranslatorDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewClientDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewTranslatorDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(() -> {
-            ViewClientDialogForm dialog = new ViewClientDialogForm(new javax.swing.JFrame(), true);
+            NewTranslatorDialogForm dialog = new NewTranslatorDialogForm(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -190,13 +240,11 @@ public class ViewClientDialogForm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

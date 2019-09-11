@@ -6,47 +6,67 @@
 package com.project.tsm.view.dialogform;
 
 import com.project.tsm.base.GlobalConst;
-import com.project.tsm.base.daoImpl.ClientDaoImpl;
-import com.project.tsm.model.Client;
-import com.project.tsm.view.internalframe.ClientFrame;
+import com.project.tsm.base.daoImpl.LanguagesDaoImpl;
+import com.project.tsm.base.daoImpl.TranslatorDaoImpl;
+import com.project.tsm.model.Languages;
+import com.project.tsm.model.Translator;
+import com.project.tsm.view.internalframe.LanguagesFrame;
+import com.project.tsm.view.internalframe.TranslatorFrame;
+import java.util.Date;
 
 /**
  *
  * @author Ahmad Dudayef
  */
-public class NewClientDialogForm extends javax.swing.JDialog {
+public class NewLanguagesDialogForm extends javax.swing.JDialog {
 
     /**
-     * Creates new form NewClientDialogForm
+     * Creates new form NewTranslatorDialogForm
      */
     
-    public ClientFrame clientFrame;
+    public LanguagesFrame languagesFrame;
     public boolean isEdits;
-    public String idClient;
-    private final ClientDaoImpl clientDaoImpl = new ClientDaoImpl();
+    public String idLanguages;
+    private final LanguagesDaoImpl languagesDaoImpl = new LanguagesDaoImpl();
     
-    public NewClientDialogForm(java.awt.Frame parent, boolean modal) {
+    public NewLanguagesDialogForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        setNewId();
+        
     }
     
+    public void setNewId(){
+        Integer lastID = Integer.valueOf(languagesDaoImpl.checkId());
+        if(lastID == 0){
+             lastID = 1;
+        }
+        else {
+            lastID = lastID + 1;
+        }
+       
+        jTextField1.setEditable(false);
+        jTextField1.setText(String.valueOf(lastID));
+        jTextField2.requestFocus();
+  
+    }
     
-    public void populateEditClient(String id, boolean isEdit){
+    public void populateEditLanguages(String id, boolean isEdit){
         
-        Client client = clientDaoImpl.findClientById(id);
-        if(client != null){
-            jTextField1.setText(client.getName());
-            jTextField2.setText(client.getContact());
-            jTextField3.setText(client.getPic());
-            jTextArea1.setText(client.getAddres());
+        Languages languages = languagesDaoImpl.findLanguagesById(id);
+        if(languages != null){
+            jTextField1.setText(String.valueOf(languages.getId()));
+            jTextField2.setText(languages.getName());
+            jTextArea1.setText(languages.getDescrption());
+   
         }
         else {
             GlobalConst.failedAlert("Load data ! ");
         }
         
         isEdits = isEdit;
-        idClient = id;
+        idLanguages = id;
     }
 
     /**
@@ -59,30 +79,23 @@ public class NewClientDialogForm extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("New Translator");
 
-        jLabel1.setText("Name");
+        jLabel1.setText("ID");
 
-        jLabel2.setText("Contact");
+        jLabel2.setText("LANGUAGES");
 
-        jLabel3.setText("PIC");
-
-        jLabel4.setText("Address");
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jLabel3.setText("DESCRIPTION");
 
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +111,10 @@ public class NewClientDialogForm extends javax.swing.JDialog {
             }
         });
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,23 +122,18 @@ public class NewClientDialogForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3)
-                            .addComponent(jScrollPane1)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -136,62 +148,67 @@ public class NewClientDialogForm extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(isEdits == false){
-            //create new client
-             try {
-                Client client = new Client();
-                client.setName(jTextField1.getText());
-                client.setContact(jTextField2.getText());
-                client.setPic(jTextField3.getText());
-                client.setAddres(jTextArea1.getText());
-                //save
-                clientDaoImpl.saveClient(client);
-                dispose();
-                clientFrame.tableClient();
-            } catch (Exception e) {
-                GlobalConst.failedAlert(e.getMessage());
-            }
+        if(jTextField2.getText().isEmpty()){
+            GlobalConst.notifAlert("Please fill required field !");
+            jTextField2.requestFocus();
         }
         else {
-           Client client = clientDaoImpl.findClientById(idClient);
-            if(client != null){
-                try {
-                 Client clientNew = new Client();
-                 clientNew.setName(jTextField1.getText());
-                 clientNew.setContact(jTextField2.getText());
-                 clientNew.setPic(jTextField3.getText());
-                 clientNew.setAddres(jTextArea1.getText());
-                 clientNew.setId(client.getId());
-                 //save update
-                 clientDaoImpl.updateClient(clientNew);
-                 dispose();
-                 clientFrame.tableClient();
-             } catch (Exception e) {
-                 GlobalConst.failedAlert(e.getMessage());
-             }
-           }
+            if(isEdits == false){
+                //create new client
+                 try {
+                    Languages languages = new Languages();
+                    languages.setName(jTextField2.getText());
+                    languages.setDescrption(jTextArea1.getText());
+                    languages.setCreatedDate(new Date());
+                    languages.setUpdatedDate(new Date());
+                    languages.setCreatedBy(GlobalConst.USER_NAME);
+                    languages.setUpdatedBy(GlobalConst.USER_NAME);
+                    System.out.println("Languages : "+languages.getName());
+                    //save
+                    languagesDaoImpl.saveLanguages(languages);
+                    dispose();
+                    languagesFrame.tableLanguages();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    GlobalConst.failedAlert(e.getMessage());
+                }
+            }
+            else {
+               Languages languages = languagesDaoImpl.findLanguagesById(idLanguages);
+                if(languages != null){
+                    try {
+                     Languages languagesNew = new Languages();
+                     languagesNew.setName(jTextField1.getText());
+                     languagesNew.setDescrption(jTextArea1.getText());
+                     languagesNew.setId(languages.getId());
+                     //save update
+                     languagesDaoImpl.updateLanguages(languagesNew);
+                     dispose();
+                     languagesFrame.tableLanguages();
+                 } catch (Exception e) {
+                     GlobalConst.failedAlert(e.getMessage());
+                 }
+               }
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -212,19 +229,20 @@ public class NewClientDialogForm extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewClientDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewLanguagesDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewClientDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewLanguagesDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewClientDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewLanguagesDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewClientDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewLanguagesDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(() -> {
-            NewClientDialogForm dialog = new NewClientDialogForm(new javax.swing.JFrame(), true);
+            NewLanguagesDialogForm dialog = new NewLanguagesDialogForm(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -241,11 +259,9 @@ public class NewClientDialogForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
