@@ -6,49 +6,54 @@
 package com.project.tsm.view.internalframe;
 
 import com.project.tsm.base.GlobalConst;
-import com.project.tsm.base.daoImpl.ClientDaoImpl;
-import com.project.tsm.model.Client;
-import com.project.tsm.view.dialogform.NewClientDialogForm;
-import com.project.tsm.view.dialogform.ViewClientDialogForm;
+import com.project.tsm.base.daoImpl.TranslatorDaoImpl;
+import com.project.tsm.model.Translator;
+import com.project.tsm.view.dialogform.NewTranslatorDialogForm;
+import com.project.tsm.view.dialogform.ViewTranslatorDialogForm;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
+
 /**
  *
- * @author Ahmad Dudayef
+ * @author Osvaldo Erens
  */
-public final class ClientFrame extends javax.swing.JInternalFrame {
+public final class TranslatorFrame extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form ClientFrame
+     * Creates new form OrderFrame
      */
     
     public DefaultTableModel tableModel;
-    private final ClientDaoImpl clientDaoImpl = new ClientDaoImpl();
+    private final TranslatorDaoImpl translatorDaoImpl = new TranslatorDaoImpl();
     
-    public ClientFrame() {
+    public TranslatorFrame() {
         initComponents();
-        tableClient();
+        tableTranslator();
     }
     
-    public void tableClient(){
-        String [] header = {"NO","ID","NAME","CP","PIC","ADDRESS"};
+    public void tableTranslator(){
+        String [] header = {"NO","ID","NAME","CONTACT"};
         tableModel = new DefaultTableModel(null, header);
         jTable1.setModel(tableModel);
-        List<Client> listAllClient = clientDaoImpl.getAllClient(jTextField1.getText());
-        if(listAllClient != null){
+        List<Translator> listAllTranslator = translatorDaoImpl.getAllTranslator(jTextField1.getText());
+        if(listAllTranslator != null){
             int number = 1;
-            for(Client client : listAllClient){
+            for(Translator translator : listAllTranslator){
                 tableModel.addRow(new Object[]{
                     number++,
-                    client.getId(),
-                    client.getName(),
-                    client.getContact(),
-                    client.getPic(),
-                    client.getAddres()
+                    translator.getId(),
+                    translator.getName(),
+                    translator.getContact()
                 });
             }
         }
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(300);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(300);
+        
     }
 
     /**
@@ -73,9 +78,7 @@ public final class ClientFrame extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Client");
-        setAutoscrolls(true);
-        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/ic_client.png"))); // NOI18N
+        setTitle("Order Frame");
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -90,7 +93,6 @@ public final class ClientFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -104,7 +106,7 @@ public final class ClientFrame extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setText("New Client");
+        jButton2.setText("New Translator");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -126,11 +128,6 @@ public final class ClientFrame extends javax.swing.JInternalFrame {
         });
 
         jButton5.setText("Delete");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,11 +136,11 @@ public final class ClientFrame extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1))
                             .addGroup(layout.createSequentialGroup()
@@ -161,35 +158,43 @@ public final class ClientFrame extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(262, 262, 262)
+                        .addComponent(jButton3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(262, 262, 262)
+                        .addComponent(jButton4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(262, 262, 262)
+                        .addComponent(jButton5)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        NewClientDialogForm newClientDialogForm = new NewClientDialogForm(null, rootPaneCheckingEnabled);
-        newClientDialogForm.clientFrame = this;
-        newClientDialogForm.setVisible(rootPaneCheckingEnabled);
+        NewTranslatorDialogForm newTranslatorDialogForm = new NewTranslatorDialogForm(null, rootPaneCheckingEnabled);
+        newTranslatorDialogForm.translatorFrame = this;
+        newTranslatorDialogForm.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       tableClient();
+        // TODO add your handling code here:
+        tableTranslator();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-        tableClient();
+        tableTranslator();
     }//GEN-LAST:event_jTextField1KeyTyped
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -198,12 +203,11 @@ public final class ClientFrame extends javax.swing.JInternalFrame {
            GlobalConst.notifAlert("Please choose data !");
        }
        else {
-           ViewClientDialogForm viewClientDialogForm = new ViewClientDialogForm(null, rootPaneCheckingEnabled);
-           viewClientDialogForm.clientFrame = this;
-           viewClientDialogForm.populateViewClient(jTable1.getValueAt(row, 1).toString());
-           viewClientDialogForm.setVisible(rootPaneCheckingEnabled);
+            ViewTranslatorDialogForm viewTranslatorDialogForm = new ViewTranslatorDialogForm(null, rootPaneCheckingEnabled);
+            viewTranslatorDialogForm.translatorFrame = this;
+            viewTranslatorDialogForm.populateViewTranslaotr(jTable1.getValueAt(row, 1).toString());
+            viewTranslatorDialogForm.setVisible(rootPaneCheckingEnabled);
        }
-        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -212,35 +216,12 @@ public final class ClientFrame extends javax.swing.JInternalFrame {
            GlobalConst.notifAlert("Please choose data !");
        }
        else {
-            NewClientDialogForm newClientDialogForm = new NewClientDialogForm(null, rootPaneCheckingEnabled);
-            newClientDialogForm.clientFrame = this;
-            newClientDialogForm.populateEditClient(jTable1.getValueAt(row, 1).toString(), true);
-            newClientDialogForm.setVisible(rootPaneCheckingEnabled);
+            NewTranslatorDialogForm newTranslatorDialogForm = new NewTranslatorDialogForm(null, rootPaneCheckingEnabled);
+            newTranslatorDialogForm.translatorFrame = this;
+            newTranslatorDialogForm.populateEditTranslator(jTable1.getValueAt(row, 1).toString(),true);
+            newTranslatorDialogForm.setVisible(rootPaneCheckingEnabled);
        }
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-       int row = jTable1.getSelectedRow();
-       if(row == -1 ){
-            GlobalConst.notifAlert("Please choose data !");
-        }
-        else {
-            if(GlobalConst.USER_NAME.equalsIgnoreCase("ADMIN")){
-                    Client client = clientDaoImpl.findClientById(jTable1.getValueAt(row, 1).toString());
-                    if(client != null){
-                        clientDaoImpl.deleteClient(client);
-                    }
-                    else {
-                         GlobalConst.notifAlert("Client no exist !");
-                    }
-            }
-            else {
-                GlobalConst.notifAlert("You are not admin !");
-            }
-        }
-      
-        
-    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
