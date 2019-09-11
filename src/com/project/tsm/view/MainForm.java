@@ -7,7 +7,15 @@ package com.project.tsm.view;
 
 import com.project.tsm.base.GlobalConst;
 import com.project.tsm.view.internalframe.ClientFrame;
+import com.project.tsm.view.internalframe.LanguagesFrame;
 import com.project.tsm.view.internalframe.OrderFrame;
+import com.project.tsm.view.internalframe.TranslatorFrame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.Timer;
 
 /**
  *
@@ -23,6 +31,21 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        showCurrentDateAndTime();
+    }
+    
+    private void showCurrentDateAndTime(){
+        //set current date and time
+         Timer timer = new Timer(500, (ActionEvent e) -> {
+    
+            jLabel8.setText(DateFormat.getDateTimeInstance().format(new Date()));
+        });
+          timer.setRepeats(true);
+          timer.setCoalesce(true);
+          timer.setInitialDelay(0);
+          timer.start();
+        //show database name
+        jLabel6.setText(GlobalConst.DATABASE_NAME.toUpperCase());
     }
 
     /**
@@ -39,25 +62,44 @@ public class MainForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/ic_employee.png"))); // NOI18N
         jLabel1.setText("Name     : ");
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/key_icon.png"))); // NOI18N
         jLabel2.setText("Login as : ");
 
         jLabel3.setText("Username");
 
         jLabel4.setText("Role");
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/ic_date.png"))); // NOI18N
+        jLabel7.setText("Date           :");
+
+        jLabel8.setText("Date Value");
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/ic_database.png"))); // NOI18N
+        jLabel5.setText("Database  :");
+
+        jLabel6.setText("Database name");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -74,21 +116,40 @@ public class MainForm extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)))
-                .addContainerGap(485, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel7))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel6))
+                .addContainerGap())
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel5, jLabel7});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel4))
-                .addGap(0, 11, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel7))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel5, jLabel7});
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -108,6 +169,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/logout.png"))); // NOI18N
         jMenuItem1.setText("Logout");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,6 +200,10 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem2);
 
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Additional");
+
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/ic_client.png"))); // NOI18N
         jMenuItem3.setText("Client");
@@ -146,9 +212,28 @@ public class MainForm extends javax.swing.JFrame {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        jMenu3.add(jMenuItem3);
 
-        jMenuBar1.add(jMenu2);
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/ic_employee.png"))); // NOI18N
+        jMenuItem4.setText("Translator");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/indonesia_flag.png"))); // NOI18N
+        jMenuItem5.setText("Languages");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -187,6 +272,16 @@ public class MainForm extends javax.swing.JFrame {
        ClientFrame clientFrame = new ClientFrame();
        GlobalConst.centerJinternalFrame(jDesktopPane1, clientFrame);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        TranslatorFrame translatorFrame = new TranslatorFrame();
+       GlobalConst.centerJinternalFrame(jDesktopPane1, translatorFrame);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+       LanguagesFrame languagesFrame = new LanguagesFrame();
+       GlobalConst.centerJinternalFrame(jDesktopPane1, languagesFrame);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,12 +324,19 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    public javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    public javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
