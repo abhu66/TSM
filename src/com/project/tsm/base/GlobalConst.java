@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class GlobalConst {
     public static String USER_NAME ="username"; 
+    public static String DATABASE_NAME="translator_db";
     
     
     public static void succesAlert(String message){
