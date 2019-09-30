@@ -77,6 +77,7 @@ public final class PopUpTranslator extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Pop Up Data Translator");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

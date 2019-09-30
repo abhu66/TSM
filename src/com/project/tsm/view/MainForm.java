@@ -11,9 +11,7 @@ import com.project.tsm.view.internalframe.LanguagesFrame;
 import com.project.tsm.view.internalframe.OrderFrame;
 import com.project.tsm.view.internalframe.TranslatorFrame;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.Timer;
 
@@ -97,7 +95,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel8.setText("Date Value");
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/project/tsm/icon/ic_database.png"))); // NOI18N
-        jLabel5.setText("Database  :");
+        jLabel5.setText("Database   :");
 
         jLabel6.setText("Database name");
 

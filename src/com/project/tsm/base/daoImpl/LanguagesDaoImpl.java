@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,8 +38,8 @@ public class LanguagesDaoImpl implements LanguagesDao{
         try {
             String saveLanguages = "INSERT INTO Languages values (null,?,?,?,?,?,?)";
             ps = connection.prepareStatement(saveLanguages);
-            ps.setString(1, languages.getName());
-            ps.setString(2, languages.getDescrption());
+            ps.setString(1, languages.getName().toUpperCase());
+            ps.setString(2, languages.getDescrption().toUpperCase());
             ps.setString(3,  sdf.format(languages.getCreatedDate()));
             ps.setString(4,  sdf.format(languages.getUpdatedDate()));
             ps.setString(5, languages.getCreatedBy());
@@ -50,8 +51,6 @@ public class LanguagesDaoImpl implements LanguagesDao{
             GlobalConst.failedAlert("Save Languages ! ");
             Logger.getLogger(LanguagesDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
    }
 
     @Override
@@ -116,9 +115,9 @@ public class LanguagesDaoImpl implements LanguagesDao{
         try {
             String saveUpdateLanguages= "UPDATE Languages SET name = ?, description = ?, updated_date = ?, updated_by = ? where id = ?";
             ps = connection.prepareStatement(saveUpdateLanguages);
-            ps.setString(1, languages.getName());
-            ps.setString(2, languages.getDescrption());
-            ps.setString(3, sdf.format(languages.getUpdatedDate()));
+            ps.setString(1, languages.getName().toUpperCase());
+            ps.setString(2, languages.getDescrption().toUpperCase());
+            ps.setString(3, sdf.format(new Date()));
             ps.setString(4, GlobalConst.USER_NAME); // updated_by
             ps.setInt(5,languages.getId());
             ps.executeUpdate();

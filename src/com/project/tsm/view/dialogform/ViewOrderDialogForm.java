@@ -17,140 +17,110 @@ import com.project.tsm.model.Translator;
 import com.project.tsm.view.internalframe.OrderFrame;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
  * @author Osvaldo Erens
  */
-public final class  NewOrderDialogForm extends javax.swing.JDialog {
+public final class  ViewOrderDialogForm extends javax.swing.JDialog {
 
     /**
      * Creates new form NewOrderDialogForm
      */
     
     public OrderFrame orderFrame;
-    public String idOrderClient;
-    public boolean isEdits;
     public String idClient;
     public String idTranslator;
     public String idLanguages;
-    private final OrderClientDaoImpl orderClientDaoImpl = new OrderClientDaoImpl();
-    
+    private final OrderClientDaoImpl orderClientDaoImpl     = new OrderClientDaoImpl();
+    public ClientDaoImpl clientDaoImpl                      = new ClientDaoImpl();
     public LanguagesDaoImpl languagesDaoImpl                = new LanguagesDaoImpl();
     public TranslatorDaoImpl translatorDaoImpl              = new TranslatorDaoImpl();
-    public ClientDaoImpl clientDaoImpl                      = new ClientDaoImpl();
     
     public HashMap<String,Client>    mapClientById          = new HashMap<>();
     public HashMap<String,Languages> mapLanguagesById       = new HashMap<>();
     public HashMap<String,Translator> mapTranslatorById     = new HashMap<>();
     
-    public NewOrderDialogForm(java.awt.Frame parent, boolean modal) {
+    public ViewOrderDialogForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         initMapClient();
         initMapLanguages();
         initMapTranslator();
         setLocationRelativeTo(null);
-        populateViewDefault();
+      
     }
     
-    private void populateViewDefault(){
-        //default
-        jDateChooser2.setEnabled(false);
-        jTextField7.setEnabled(false);
-        
-        jDateChooser3.setEnabled(false);
-        jTextField9.setEnabled(false);
-        
-        if(jComboBox5.getSelectedItem().toString().equalsIgnoreCase("DATE")){
-            jDateChooser2.setEnabled(true);
-            jTextField7.setEnabled(false);
-        }
-        else {
-            jDateChooser2.setEnabled(false);
-             jTextField7.setEnabled(true);
-        }
-        
-        if(jComboBox6.getSelectedItem().toString().equalsIgnoreCase("DATE")){
-            jDateChooser3.setEnabled(true);
-            jTextField9.setEnabled(false);
-        }
-        else {
-            jDateChooser3.setEnabled(false);
-             jTextField9.setEnabled(true);
-        }
-    }
-     public void populateEditOrderClient(String id, boolean isEdit){
+    public void populateViewOrderClient(String id){
         
         OrderClient orderClient = orderClientDaoImpl.findOrderClientById(id);
         if(orderClient != null){
-  
             jTextField1.setText(String.valueOf(orderClient.getProject_number()));
             jDateChooser1.setDate(orderClient.getDate_order());
             //data client
-            idClient = String.valueOf(orderClient.getClient_id());
+            jTextField12.setText(String.valueOf(orderClient.getClient_id()));
             jTextField2.setText(mapClientById.get(String.valueOf(orderClient.getClient_id())).getPic());
             jTextField3.setText(mapClientById.get(String.valueOf(orderClient.getClient_id())).getContact());
             jTextArea1.setText(mapClientById.get(String.valueOf(orderClient.getClient_id())).getAddres());
             
-            idLanguages = String.valueOf(orderClient.getLanguange());
+            //data languange
             jTextField10.setText(mapLanguagesById.get(String.valueOf(orderClient.getLanguange())).getName());
-            jComboBox2.setSelectedItem(orderClient.getOrder_type());
+            
+            jTextField17.setText(orderClient.getOrder_type());
             jTextField4.setText(orderClient.getFile_name());
+            jTextField5.setText(orderClient.getQty_type());
+            jTextField13.setText(orderClient.getQty_value());
             
-            jComboBox3.setSelectedItem(orderClient.getQty_type());
-            jTextField5.setText(orderClient.getQty_value());
+            jTextField14.setText(orderClient.getRate_type());
+            jTextField16.setText(orderClient.getRate_value());
             
-            jComboBox4.setSelectedItem(orderClient.getRate_type());
-            jTextField6.setText(orderClient.getRate_value());
-            
-            jComboBox5.setSelectedItem(orderClient.getDeadline_client_type());
-            if(orderClient.getDeadline_client_type().equalsIgnoreCase("Date")){
+             jTextField15.setText(orderClient.getDeadline_client_type());
+             if(orderClient.getDeadline_client_type().equalsIgnoreCase("Date")){
                 try {
                     jDateChooser2.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(orderClient.getDeadline_client_value()));
                 } catch (ParseException ex) {
-                    Logger.getLogger(NewOrderDialogForm.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ViewOrderDialogForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            else {
-                jTextField7.setText(orderClient.getDeadline_client_value());
-            }
-            
-            jComboBox7.setSelectedItem(orderClient.getStatus());
-            
-            idTranslator = String.valueOf(orderClient.getTranslator_id());
-            jTextField8.setText(mapTranslatorById.get(String.valueOf(orderClient.getTranslator_id())).getName());
-            jTextField11.setText(mapTranslatorById.get(String.valueOf(orderClient.getTranslator_id())).getContact());
-          
-            jComboBox6.setSelectedItem(orderClient.getTranslator_deadline_type());
-            if(jComboBox6.getSelectedItem().toString().equalsIgnoreCase("Date")){
+             }
+             else {
+                 jTextField7.setText(orderClient.getDeadline_client_value());
+             }
+             jTextField16.setText(orderClient.getStatus());
+             
+             jTextField18.setText(String.valueOf(orderClient.getTranslator_id()));
+             jTextField8.setText(mapTranslatorById.get(String.valueOf(orderClient.getTranslator_id())).getName());
+             jTextField11.setText(mapTranslatorById.get(String.valueOf(orderClient.getTranslator_id())).getContact());
+
+             jTextField19.setText(orderClient.getTranslator_deadline_type());
+             if(orderClient.getTranslator_deadline_type().equalsIgnoreCase("Date")){
                 try {
                     jDateChooser3.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(orderClient.getTranslator_deadline_value()));
                 } catch (ParseException ex) {
-                    Logger.getLogger(NewOrderDialogForm.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ViewOrderDialogForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            else {
-                jTextField9.setText(orderClient.getTranslator_deadline_value());
-            }
-            
-        
+             }
+             else {
+                 jTextField9.setText(orderClient.getTranslator_deadline_value());
+             }
+             
+             //jTextField15.setText(orderClient.getDeadline_client_value());
+//            jTextField2.setText(orderClient.getName());
+//            jTextArea1.setText(orderClient.getDescrption());
+   
         }
         else {
             GlobalConst.failedAlert("Load data ! ");
         }
-        
-        isEdits = isEdit;
-        idOrderClient = id;
+
     }
-     
-     
-     public void initMapClient(){
+    
+    
+    public void initMapClient(){
         List<Client> listClient = clientDaoImpl.getAllClient(null);
         if(listClient != null){
             listClient.forEach((client) -> {
@@ -207,7 +177,6 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -215,90 +184,77 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jTextField12 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
         jTextField5 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jTextField7 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jComboBox6 = new javax.swing.JComboBox<>();
         jDateChooser3 = new com.toedter.calendar.JDateChooser();
         jTextField9 = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jTextField11 = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
+        jTextField18 = new javax.swing.JTextField();
+        jTextField19 = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jComboBox7 = new javax.swing.JComboBox<>();
         jTextField10 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jTextField6 = new javax.swing.JTextField();
+        jTextField13 = new javax.swing.JTextField();
+        jTextField14 = new javax.swing.JTextField();
+        jTextField15 = new javax.swing.JTextField();
+        jTextField16 = new javax.swing.JTextField();
+        jTextField17 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Order Form");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Client Information"));
 
-        jLabel3.setText("Client");
-
-        jButton1.setText("Browse");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("Client Id");
 
         jLabel4.setText("Name");
 
-        jTextField2.setEnabled(false);
+        jTextField2.setEditable(false);
 
         jLabel5.setText("CP / PIC");
 
-        jTextField3.setEnabled(false);
+        jTextField3.setEditable(false);
 
         jLabel6.setText("Address");
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setEnabled(false);
         jScrollPane1.setViewportView(jTextArea1);
-
-        jButton2.setText("New");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Information"));
 
         jLabel2.setText("Date Order");
+
+        jDateChooser1.setEnabled(false);
+
+        jTextField1.setEditable(false);
 
         jLabel1.setText("Project Number");
 
@@ -331,6 +287,8 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jTextField12.setEditable(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -345,19 +303,14 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField2))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                        .addComponent(jTextField3)
+                        .addComponent(jTextField2))
+                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -365,8 +318,7 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
+                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -389,26 +341,21 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
 
         jLabel8.setText("Order Type");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SWORN", "NON-SWORN" }));
-
         jLabel9.setText("File Name");
+
+        jTextField4.setEditable(false);
 
         jLabel10.setText("QTY");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Page", "Word" }));
+        jTextField5.setEditable(false);
 
         jLabel11.setText("Rate");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IDR", "USD" }));
-
         jLabel12.setText("Deadline");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Date", "Time" }));
-        jComboBox5.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox5ItemStateChanged(evt);
-            }
-        });
+        jDateChooser2.setEnabled(false);
+
+        jTextField7.setEditable(false);
 
         jLabel13.setText("Date");
 
@@ -416,27 +363,17 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Translator Information"));
 
-        jLabel15.setText("Translator");
-
-        jButton3.setText("Browse");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
+        jLabel15.setText("Translator Id");
 
         jLabel16.setText("Name");
 
-        jTextField8.setEnabled(false);
+        jTextField8.setEditable(false);
 
         jLabel17.setText("Deadline");
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Date", "Time" }));
-        jComboBox6.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox6ItemStateChanged(evt);
-            }
-        });
+        jDateChooser3.setEnabled(false);
+
+        jTextField9.setEditable(false);
 
         jLabel18.setText("Time");
 
@@ -444,14 +381,11 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
 
         jLabel21.setText("Contact");
 
-        jTextField11.setEnabled(false);
+        jTextField11.setEditable(false);
 
-        jButton7.setText("New");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
+        jTextField18.setEditable(false);
+
+        jTextField19.setEditable(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -468,16 +402,18 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
                     .addComponent(jLabel21))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7)))
-                .addContainerGap(87, Short.MAX_VALUE))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(87, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -485,25 +421,25 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(jButton3)
-                    .addComponent(jButton7))
+                    .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(6, 6, 6)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGap(6, 6, 6)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addGap(15, 15, 15)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel17)
+                            .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
                         .addComponent(jLabel19))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(26, 26, 26)
                         .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -514,23 +450,26 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
 
         jLabel20.setText("Status");
 
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DELIVERED", "DELIVERED INVOICE NOT ISSUED", "DONE", "ON PROCESS", "PROCESSING" }));
+        jTextField10.setEditable(false);
 
-        jButton4.setText("Browse");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButton6.setText("Close");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButton6ActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Save");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
+        jTextField6.setEditable(false);
 
-        jButton6.setText("Cancel");
+        jTextField13.setEditable(false);
+
+        jTextField14.setEditable(false);
+
+        jTextField15.setEditable(false);
+
+        jTextField16.setEditable(false);
+
+        jTextField17.setEditable(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -551,39 +490,31 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                            .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton6))
+                        .addGap(16, 16, 16))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField5)
-                                    .addComponent(jTextField6)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton4)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(126, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField6)
+                            .addComponent(jTextField13))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(126, 126, 126))
         );
+
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField14, jTextField15, jTextField16, jTextField5});
+
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -592,33 +523,30 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4))
+                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel11)
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel11)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -630,12 +558,10 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton6)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -654,159 +580,16 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 309, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(5, 5, 5))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       PopUpClient popUpClient = new PopUpClient(null, rootPaneCheckingEnabled);
-       popUpClient.newOrderDialogForm = this;
-       popUpClient.setVisible(rootPaneCheckingEnabled);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jTextArea1.setEnabled(rootPaneCheckingEnabled);
-        jTextField2.setEnabled(rootPaneCheckingEnabled);
-        jTextField3.setEnabled(rootPaneCheckingEnabled);
-        
-        jTextArea1.setText(null);
-        jTextField2.setText(null);
-        jTextField3.setText(null);
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        jTextField8.setEnabled(false);
-        jTextField11.setEnabled(false);
-        jTextField8.setText(null);
-        jTextField11.setText(null);
-        PopUpTranslator popUpTranslator = new PopUpTranslator(null, rootPaneCheckingEnabled);
-        popUpTranslator.newOrderDialogForm = this;
-        popUpTranslator.setVisible(rootPaneCheckingEnabled);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        PopUpLanguages popUpLanguages = new PopUpLanguages(null, rootPaneCheckingEnabled);
-        popUpLanguages.newOrderDialogForm = this;
-        popUpLanguages.setVisible(rootPaneCheckingEnabled);
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jComboBox5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox5ItemStateChanged
-        // TODO add your handling code here:
-        populateViewDefault();
-    }//GEN-LAST:event_jComboBox5ItemStateChanged
-
-    private void jComboBox6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox6ItemStateChanged
-        // TODO add your handling code here:
-        populateViewDefault();
-    }//GEN-LAST:event_jComboBox6ItemStateChanged
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-       jTextField8.setEnabled(rootPaneCheckingEnabled);
-       jTextField11.setEnabled(rootPaneCheckingEnabled);
-       jTextField8.setText(null);
-       jTextField11.setText(null);
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-     
-      if(jTextField2.getText().isEmpty()){
-            GlobalConst.notifAlert("Please fill required field !");
-            jTextField2.requestFocus();
-        }
-        else {
-            if(isEdits == false){
-                //create new client
-                    OrderClient orderClientNew = new OrderClient();
-                    orderClientNew.setProject_number(Integer.valueOf(jTextField1.getText()));
-                    orderClientNew.setDate_order(jDateChooser1.getDate());
-                    orderClientNew.setClient_id(Integer.valueOf(idClient));
-                    orderClientNew.setOrder_type(jComboBox2.getSelectedItem().toString());
-                    orderClientNew.setLanguange(Integer.valueOf(idLanguages));
-                    orderClientNew.setFile_name(jTextField4.getText());
-                    orderClientNew.setQty_type(jComboBox3.getSelectedItem().toString());
-                    orderClientNew.setQty_value(jTextField5.getText());
-                    orderClientNew.setRate_type(jComboBox4.getSelectedItem().toString());
-                    orderClientNew.setRate_value(jTextField6.getText());
-                    orderClientNew.setDeadline_client_type(jComboBox5.getSelectedItem().toString());
-                    if(jComboBox5.getSelectedIndex() == 0){
-                        orderClientNew.setDeadline_client_value(new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser2.getDate()));
-                    }
-                    else {
-                        orderClientNew.setDeadline_client_value(jTextField7.getText());
-                    }
-                    orderClientNew.setTranslator_id(Integer.valueOf(idTranslator));
-                    orderClientNew.setTranslator_deadline_type(jComboBox6.getSelectedItem().toString());
-                    if(jComboBox6.getSelectedIndex() == 0){
-                        orderClientNew.setTranslator_deadline_value(new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser3.getDate()));
-                    }
-                    else {
-                         orderClientNew.setTranslator_deadline_value(jTextField9.getText());
-                    }
-                    orderClientNew.setStatus(jComboBox7.getSelectedItem().toString());
-                    orderClientNew.setCreatedDate(new Date());
-                    orderClientNew.setUpdatedDate(new Date());
-                    orderClientNew.setCreatedBy(GlobalConst.USER_NAME);
-                    orderClientNew.setUpdatedBy(GlobalConst.USER_NAME);
-                    //SAVE TO DATABASE
-                    try{
-                        orderClientDaoImpl.saveNewOrder(orderClientNew);
-                        dispose();
-                        orderFrame.tableOrderClient();
-                    }catch(Exception x){
-                        GlobalConst.failedAlert(x.getMessage());
-                    }
-            }
-            else {
-               OrderClient orderClient = orderClientDaoImpl.findOrderClientById(idOrderClient);
-                if(orderClient != null){
-                     //SAVE TO DATABASE
-                        try{
-                        OrderClient orderClientNew = new OrderClient();
-                        orderClientNew.setProject_number(Integer.valueOf(jTextField1.getText()));
-                        orderClientNew.setDate_order(jDateChooser1.getDate());
-                        orderClientNew.setClient_id(Integer.valueOf(idClient));
-                        orderClientNew.setOrder_type(jComboBox2.getSelectedItem().toString());
-                        orderClientNew.setLanguange(Integer.valueOf(idLanguages));
-                        orderClientNew.setFile_name(jTextField4.getText());
-                        orderClientNew.setQty_type(jComboBox3.getSelectedItem().toString());
-                        orderClientNew.setQty_value(jTextField5.getText());
-                        orderClientNew.setRate_type(jComboBox4.getSelectedItem().toString());
-                        orderClientNew.setRate_value(jTextField6.getText());
-                        orderClientNew.setDeadline_client_type(jComboBox5.getSelectedItem().toString());
-                        if(jComboBox5.getSelectedIndex() == 0){
-                            orderClientNew.setDeadline_client_value(new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser2.getDate()));
-                        }
-                        else {
-                            orderClientNew.setDeadline_client_value(jTextField7.getText());
-                        }
-                        orderClientNew.setTranslator_id(Integer.valueOf(idTranslator));
-                        orderClientNew.setTranslator_deadline_type(jComboBox6.getSelectedItem().toString());
-                        if(jComboBox6.getSelectedIndex() == 0){
-                            orderClientNew.setTranslator_deadline_value(new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser3.getDate()));
-                        }
-                        else {
-                             orderClientNew.setTranslator_deadline_value(jTextField9.getText());
-                        }
-                        orderClientNew.setStatus(jComboBox7.getSelectedItem().toString());
-                        orderClientNew.setUpdatedDate(new Date());
-                        orderClientNew.setUpdatedBy(GlobalConst.USER_NAME);
-                        orderClientNew.setId(Integer.valueOf(idOrderClient));
-
-                        orderClientDaoImpl.updateOrderClient(orderClientNew);
-                        dispose();
-                        System.out.println("iS Edit : "+isEdits);
-                        orderFrame.tableOrderClient();
-                        }catch(NumberFormatException x){
-                            GlobalConst.failedAlert(x.getMessage());
-                        }
-                }
-            }
-      }
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -824,16 +607,21 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewOrderDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ViewOrderDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ViewOrderDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ViewOrderDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ViewOrderDialogForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(() -> {
-            NewOrderDialogForm dialog = new NewOrderDialogForm(new javax.swing.JFrame(), true);
+            ViewOrderDialogForm dialog = new ViewOrderDialogForm(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -845,19 +633,7 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JComboBox<String> jComboBox7;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
@@ -891,6 +667,14 @@ public final class  NewOrderDialogForm extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField1;
     public javax.swing.JTextField jTextField10;
     public javax.swing.JTextField jTextField11;
+    private javax.swing.JTextField jTextField12;
+    private javax.swing.JTextField jTextField13;
+    private javax.swing.JTextField jTextField14;
+    private javax.swing.JTextField jTextField15;
+    private javax.swing.JTextField jTextField16;
+    public javax.swing.JTextField jTextField17;
+    private javax.swing.JTextField jTextField18;
+    private javax.swing.JTextField jTextField19;
     public javax.swing.JTextField jTextField2;
     public javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;

@@ -13,6 +13,7 @@ import com.project.tsm.model.Translator;
 import com.project.tsm.view.dialogform.NewLanguagesDialogForm;
 import com.project.tsm.view.dialogform.NewTranslatorDialogForm;
 import com.project.tsm.view.dialogform.ViewClientDialogForm;
+import com.project.tsm.view.dialogform.ViewLanguagesDialogForm;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -124,6 +125,11 @@ public class LanguagesFrame extends javax.swing.JInternalFrame {
         });
 
         jButton4.setText("Edit");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Delete");
 
@@ -201,12 +207,25 @@ public class LanguagesFrame extends javax.swing.JInternalFrame {
            GlobalConst.notifAlert("Please choose data !");
        }
        else {
-//           ViewClientDialogForm viewClientDialogForm = new ViewClientDialogForm(null, rootPaneCheckingEnabled);
-//           viewClientDialogForm.clientFrame = this;
-//           viewClientDialogForm.populateViewClient(jTable1.getValueAt(row, 1).toString());
-//           viewClientDialogForm.setVisible(rootPaneCheckingEnabled);
+           ViewLanguagesDialogForm viewLanguagesDialogForm = new ViewLanguagesDialogForm(null, rootPaneCheckingEnabled);
+           viewLanguagesDialogForm.languagesFrame = this;
+           viewLanguagesDialogForm.populateViewLanguages(jTable1.getValueAt(row, 1).toString());
+           viewLanguagesDialogForm.setVisible(rootPaneCheckingEnabled);
        }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       int row = jTable1.getSelectedRow();
+       if(row == -1 ){
+           GlobalConst.notifAlert("Please choose data !");
+       }
+       else {
+           NewLanguagesDialogForm newLanguagesDialogForm = new NewLanguagesDialogForm(null, rootPaneCheckingEnabled);
+           newLanguagesDialogForm.languagesFrame = this;
+           newLanguagesDialogForm.populateEditLanguages(jTable1.getValueAt(row, 1).toString(),true);
+           newLanguagesDialogForm.setVisible(rootPaneCheckingEnabled);
+       }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

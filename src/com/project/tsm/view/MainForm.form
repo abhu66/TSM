@@ -272,7 +272,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/com/project/tsm/icon/ic_database.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Database  :"/>
+            <Property name="text" type="java.lang.String" value="Database   :"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">

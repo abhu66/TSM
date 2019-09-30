@@ -18,7 +18,7 @@ public class OrderClient extends BaseModel{
     private Date date_order;
     private int client_id;
     private String order_type;
-    private String languange;
+    private int languange;
     private String file_name;
     private String qty_type;
     private String qty_value;
@@ -63,11 +63,11 @@ public class OrderClient extends BaseModel{
         this.order_type = order_type;
     }
 
-    public String getLanguange() {
+    public Integer getLanguange() {
         return languange;
     }
 
-    public void setLanguange(String languange) {
+    public void setLanguange(Integer languange) {
         this.languange = languange;
     }
 

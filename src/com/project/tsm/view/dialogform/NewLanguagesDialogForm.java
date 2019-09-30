@@ -89,7 +89,7 @@ public class NewLanguagesDialogForm extends javax.swing.JDialog {
         jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("New Translator");
+        setTitle("Languages Form");
 
         jLabel1.setText("ID");
 
@@ -197,7 +197,7 @@ public class NewLanguagesDialogForm extends javax.swing.JDialog {
                 if(languages != null){
                     try {
                      Languages languagesNew = new Languages();
-                     languagesNew.setName(jTextField1.getText());
+                     languagesNew.setName(jTextField2.getText());
                      languagesNew.setDescrption(jTextArea1.getText());
                      languagesNew.setId(languages.getId());
                      //save update

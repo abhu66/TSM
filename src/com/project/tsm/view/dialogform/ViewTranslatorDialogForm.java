@@ -63,7 +63,7 @@ public class ViewTranslatorDialogForm extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("New Translator");
+        setTitle("Translator Information");
 
         jLabel1.setText("ID");
 
